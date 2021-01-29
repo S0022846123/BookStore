@@ -1,4 +1,4 @@
-SEQUENCE “bookstore.db::bookseq”
+SEQUENCE "bookstore.db::bookseq"
 
 INCREMENT BY 1
 

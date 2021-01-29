@@ -1,4 +1,4 @@
-SEQUENCE “bookstore.db::authorseq”
+SEQUENCE "bookstore.db::authorseq"
 
 INCREMENT BY 1
 
