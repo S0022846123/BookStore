@@ -1,0 +1,59 @@
+ID: BookStore
+_schema-version: '2.1'
+description: BookStoreDemo
+parameters:
+   deploy_mode: html5-repo
+version: 0.0.1
+
+modules:
+ - name: bookstore-approuter
+   type: approuter.nodejs
+   path: bookstore-approuter
+   parameters:
+      disk-quota: 256M
+      memory: 256M
+   requires:
+    - name: BookStore_html5_repo_runtime
+
+
+ - name: BookStore_ui_deployer
+   type: com.sap.html5.application-content
+   path: BookStore_ui_deployer
+   requires:
+    - name: BookStore_html5_repo_host
+
+
+ - name: booksdb
+   type: hdb
+   path: booksdb
+   requires:
+    - name: hdi_booksdb
+
+
+ - name: booksjs
+   type: nodejs
+   path: booksjs
+   provides:
+    - name: booksjs_api
+      properties:
+         url: ${default-url}
+
+resources:
+ - name: BookStore_html5_repo_runtime
+   parameters:
+      service-plan: app-runtime
+      service: html5-apps-repo
+   type: org.cloudfoundry.managed-service
+
+ - name: BookStore_html5_repo_host
+   parameters:
+      service-plan: app-host
+      service: html5-apps-repo
+   type: org.cloudfoundry.managed-service
+
+
+ - name: hdi_booksdb
+   properties:
+      hdi-container-name: ${service-name}
+   type: com.sap.xs.hdi-container
+
